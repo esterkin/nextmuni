@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>nextmuni.js tests</title>
+
+    <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.14.0.css">
+    <script src="http://code.jquery.com/qunit/qunit-1.14.0.js"></script>
+    <script src="nextmuni.js"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+    <script>
+
+        /*
+            test to see if loadNearestStops() loads properly
+            should fail if nearby bus stops for (37.779994, -122.490008) do not include 'Geary'
+
+            note: http://sfnextmuni.herokuapp.com/nearby/$LAT/$LON does not return the exact object every time
+            this is a bug in the original https://github.com/rf/sugabus and https://github.com/rf/nextbusjs from which it was derived from
+
+        */
+
+        test("loadNearestStops test", function () { 
+
+            stop();
+
+            loadNearestStops(37.779994, -122.490008, function (data) {
+
+                var expectedJSONString = JSON.stringify(data);
+
+                ok((expectedJSONString.indexOf("Geary") != -1), "loadNearestStops passed");
+                start();
+            });
+
+        })
+
+        /*
+
+        test to see if loadDirectionsAndStops() loads properly for N-Judah
+        
+        */
+
+         test("loadDirectionsAndStops test", function () {  
+
+            stop();
+
+            loadDirectionsAndStops('N', function (data) {
+
+                ok($(data).find('route').attr('title') == 'N-Judah', "loadDirectionsAndStops passed");
+                start();
+            });
+
+        });
+
+        //test to see if leaflet.js map loads 
+
+        test("initializeMap test", function () {
+
+                initializeMap();
+                ok(map, "initializeMap passed");
+
+            }
+
+        );
+    </script>
+</head>
+
+<body>
+
+    <div id="qunit"></div>
+
+    <div id="qunit-fixture">
+
+        <div id='map'></div>
+
+    </div>
+
+</body>
+
+</html>
