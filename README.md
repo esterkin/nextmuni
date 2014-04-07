@@ -30,7 +30,7 @@ Data required for the app is readily available in an easy to use API. As NextBus
 
 **Resources** 
 
-Mapping library: [Leaflet.js](http://leaflet.js)  
+Mapping library: [Leaflet.js](http://leafletjs.com)  
 
 Bus data: [NextBus API]( http://www.nextbus.com/xmlFeedDocs/NextBusXMLFeed.pdf) 
 
