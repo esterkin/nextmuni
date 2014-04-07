@@ -27,6 +27,7 @@ Data required for the app is readily available in an easy to use API. As NextBus
 * Calculate and display total distance of selected bus route.
 * Fix bugs found in the NextBusJS API to improve the nearest stops feature. 
 * Work on a more mobile-friendly user interface. 
+* Create more test cases. 
 
 **Resources** 
 
