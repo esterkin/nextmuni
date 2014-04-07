@@ -23,8 +23,10 @@ Data required for the app is readily available in an easy to use API. As NextBus
 
 ***Future work***
 
-Fix bugs found in the NextBusJS API to improve the nearest stops feature. 
-Work on a more mobile-friendly user interface. 
+* Plot selected bus route using [GeoJSON](http://en.wikipedia.org/wiki/GeoJSON)’s [LineString](http://leafletjs.com/examples/geojson.html).
+* Calculate and display total distance of selected bus route.
+* Fix bugs found in the NextBusJS API to improve the nearest stops feature. 
+* Work on a more mobile-friendly user interface. 
 
 **Resources** 
 
