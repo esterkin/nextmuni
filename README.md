@@ -1,8 +1,8 @@
 #NextMuni implementation with NextBus API and Leaflet.js#
 
-***
 
-Hosted app: [http://cs.ucsb.edu/esterkin/nextmuni](http://cs.ucsb.edu/esterkin/nextmuni)
+
+Hosted app: [http://cs.ucsb.edu/~esterkin/nextmuni](http://cs.ucsb.edu/esterkin/nextmuni)
 
 App repo: [http://github.com/esterkin/nextmuni](http://github.com/esterkin/nextmuni)
 
