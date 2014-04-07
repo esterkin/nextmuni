@@ -15,7 +15,7 @@ App repo: [http://github.com/esterkin/nextmuni](http://github.com/esterkin/nextm
 
 **Reasoning:** 
 
-Data required for the app is readily available in an easy to use API. As NextBus does not provide an API for nearest stops, I created [sfnextmuni.herokuapp.com](http://sfnextmuni.herokuapp.com) which is a version of [SugaBus](https://github.com/rf/sugabus) and [runextbus.herokuapp.com](http://runextbus.herokuapp.com) catered to SF MUNI. This nodeJS web app uses the [NextBusJS](https://github.com/rf/nextbusjs) API to find nearest bus stops.
+Data required for the app is readily available in an easy to use API. As NextBus does not provide an API for nearest stops, I created [sfnextmuni.herokuapp.com](http://sfnextmuni.herokuapp.com) which is a version of [SugaBus](https://github.com/rf/sugabus) and [runextbus.herokuapp.com](http://runextbus.herokuapp.com) catered to SF MUNI - this nodeJS web app uses the [NextBusJS](https://github.com/rf/nextbusjs) API to find nearest bus stops.
 
 ***Bugs***
 
