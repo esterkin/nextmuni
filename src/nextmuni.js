@@ -80,7 +80,7 @@
 
     function loadDirectionsAndStops(routeSelected, successCallback) {
 
-        var url = "http://webservices.nextbus.com/service/publicXMLFeed?command=routeConfig&a=" + agency + "&r=" + routeSelected;
+        var url = "http://webservices.nextbus.com/service/publicXMLFeed?command=routeConfig&a=" + agency + "&r=" + routeSelected + "&terse";
 
         $.ajax({
             url: url,
