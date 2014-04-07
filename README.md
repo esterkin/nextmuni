@@ -13,15 +13,15 @@ App repo: [http://github.com/esterkin/nextmuni](http://github.com/esterkin/nextm
 
 **Technical track:** Mostly front-end
 
-**Reasoning:** 
+**Reasoning** 
 
 Data required for the app is readily available in an easy to use API. As NextBus does not provide an API for nearest stops, I created [sfnextmuni.herokuapp.com](http://sfnextmuni.herokuapp.com) which is a version of [SugaBus](https://github.com/rf/sugabus) and [runextbus.herokuapp.com](http://runextbus.herokuapp.com) catered to SF MUNI - this nodeJS web app uses the [NextBusJS](https://github.com/rf/nextbusjs) API to find nearest bus stops.
 
-***Bugs***
+**Bugs**
 
 *closestStops()* in [https://github.com/rf/nextbusjs/blob/master/lib/index.js]( https://github.com/rf/nextbusjs/blob/master/lib/index.js) does not work as expected 
 
-***Future work***
+**Future work**
 
 * Plot selected bus route using [GeoJSON](http://en.wikipedia.org/wiki/GeoJSON)’s [LineString](http://leafletjs.com/examples/geojson.html).
 * Calculate and display total distance of selected bus route.
