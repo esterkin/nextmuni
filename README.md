@@ -45,7 +45,7 @@ Nearest stops feature: [NextBusJS](https://github.com/rf/nextbusjs)
 
 
 
-Web apps: [Isla Vista Alert Map]( http://ivalertmap.appspot.con)
+Web apps: [Isla Vista Alert Map]( http://ivalertmap.appspot.com)
 
 
 Android apps:
