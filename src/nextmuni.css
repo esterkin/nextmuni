@@ -1,0 +1,67 @@
+html, body {
+
+    font-family: Arial, Helvetica, sans-serif
+}
+
+#content{
+
+
+	width: 1200px;
+	margin: 0 auto;
+    
+}
+
+
+select {
+    border:1px solid #ccc;
+    height:30px;
+    vertical-align:middle;
+}
+
+#leftpane{
+	margin-top: 10px;
+	float:left;
+	height:auto;
+	width:auto;
+	font-size:30px;
+}
+
+
+ul{	
+	list-style-type: none;
+	padding-left:0;
+}
+
+
+#mapcontainer{
+	margin-top: 10px;
+	width: 640px; 
+	float:right;
+}
+
+#predictions{
+
+	color:#993300;
+
+}
+
+#nearbystopstitle{
+
+	font-size: 25px;
+	color:black;
+
+}
+
+#nearbystops{
+
+	font-size: 20px;
+	color:#993300;
+
+}
+
+#map{
+
+  height: 480px;
+
+}
+
