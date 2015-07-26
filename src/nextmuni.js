@@ -74,6 +74,10 @@
 
         }
 
+        if(getParameterByName("r") != "" && getParameterByName("r") != "null"){
+            $("#routes").val(getParameterByName("r"));
+        }
+
         routeSelected = $('#routes').val() // set which route is currently selected 
         loadDirectionsAndStops(routeSelected, listDirections); //pass selected route to loadDirectionsAndStops()
     }
@@ -124,6 +128,10 @@
 
         }
 
+        if(getParameterByName("d") != "" && getParameterByName("d") != "null"){
+            $("#directions").val(getParameterByName("d"));
+        }
+
         listStops(xml);
     }
 
@@ -160,6 +168,12 @@
         stopTagSelected = $('#stops').val()
 
         //console.log("stopTagSelected " + stopTagSelected);
+
+        if(getParameterByName("s") != "" && getParameterByName("s") != "null"){
+            $("#stops").val(getParameterByName("s"));
+        }
+
+        updateURL();   
 
         loadPredictions(routeSelected, stopTagSelected);
 
@@ -336,4 +350,18 @@
     function sortNumber(a,b) { //compares two numbers (used for sorting)
          return a - b;
     }
+    function updateURL(clear){
+        if(clear){
+            window.history.replaceState({},"","?r=" + $("#routes").val() + "&d=null" + "&s=null");
+        }
+        else{
+            window.history.replaceState({},"", "?r=" + $("#routes").val() + "&d=" + $("#directions").val() + "&s=" + $("#stops").val());
+        }
+    }
 
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }

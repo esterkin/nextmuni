@@ -12,6 +12,14 @@
     <script>
         $(document).ready(function () {
 
+            $("#stops").change(function(e){
+               updateURL(); 
+            });
+
+            $("#routes, #directions").change(function(e){
+                updateURL(true);
+            });
+                
             loadRoutes(nextBusURL,agency);
 
             $("#routes").change(function () {
