@@ -266,6 +266,14 @@
 
         map = L.map('map').setView([37.7577, -122.4376], 16);
 
+        map.on('dragstart', function(){
+            $("#leftpane").fadeTo(100,0.4);
+            })
+     
+            .on('dragend', function(){
+                    $("#leftpane").fadeTo(100,1);
+                });
+
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
