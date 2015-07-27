@@ -21,10 +21,8 @@
     var nextBusURL = "http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=";
 
     //arrays used to preserve output order
-
     var routesarray = []; 
     var directionsarray = []; 
-
 
     function Route(tag, title) { //Route object
         this.tag = tag; //routes tag e.g. 38AX
@@ -61,7 +59,6 @@
         $(routes).each(function (index) {
 
             //loop through the <route> elements building a route object and adding it to the array of route objects
-
             routesarray.push(new Route($(this).attr('tag'), $(this).attr('title')));
 
         });
@@ -152,7 +149,6 @@
 
         var direction_select_index = $("#directions")[0].selectedIndex;
         var direction_stops = $(directionTags[direction_select_index]).children('stop'); //contains only <stop> element with single 'tag' attribute
-        //console.log(direction_stops);
 
         $(direction_stops).each(function (index) {
 
@@ -166,8 +162,6 @@
 
 
         stopTagSelected = $('#stops').val()
-
-        //console.log("stopTagSelected " + stopTagSelected);
 
         if(getParameterByName("s") != "" && getParameterByName("s") != "null"){
             $("#stops").val(getParameterByName("s"));
@@ -184,7 +178,6 @@
 
         var url = "http://webservices.nextbus.com/service/publicXMLFeed?command=predictions&a=sf-muni&r=" + routeSelected + "&s=" + stopTagSelected + "&useShortTitles=true";
 
-        console.log(url);
         $.ajax({
             url: url,
             type: 'GET',
@@ -240,7 +233,8 @@
             else{
                 var min = predictionsarray[i];
                 $('#predictions').append($("<li></li>")
-                .text(min + " min"));
+                .append("<div class='prediction'>" + min +  "</div>")
+                .append("<span class='predictionUnits'>" + "min" + "</span>"));
 
                 if(titleCount==0){
                     title += min + " ";
@@ -294,8 +288,6 @@
     function storeUserLoc(position) {
         var latitude = position.coords.latitude;
         var longitude = position.coords.longitude;
-        // console.log(latitude);
-        // console.log(longitude);
         loadNearestStops(latitude, longitude, displayNearestStops);
     }
 
@@ -314,9 +306,7 @@
             type: 'GET',
             dataType: "json",
             success: function (data) {
-
-                successCallback(data);
-                
+                successCallback(data);            
             }
 
         });
@@ -336,8 +326,6 @@
                         break;
                     else if (data.hasOwnProperty(key)) {
 
-                        console.log(key);
-
                         $("#nearbystops").append($("<li></li>")
                             .text(key));
                         count++;
@@ -350,6 +338,7 @@
     function sortNumber(a,b) { //compares two numbers (used for sorting)
          return a - b;
     }
+
     function updateURL(clear){
         if(clear){
             window.history.replaceState({},"","?r=" + $("#routes").val() + "&d=null" + "&s=null");

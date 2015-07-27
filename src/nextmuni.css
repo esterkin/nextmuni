@@ -1,67 +1,72 @@
-html, body {
-
-    font-family: Arial, Helvetica, sans-serif
-}
-
-#content{
-
-
-	width: 1200px;
-	margin: 0 auto;
-    
+html, body{
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100%;
 }
 
 
-select {
+select{
     border:1px solid #ccc;
-    height:30px;
+    height:40px;
+    font-size: 0.5em;
     vertical-align:middle;
 }
 
-#leftpane{
-	margin-top: 10px;
-	float:left;
-	height:auto;
-	width:auto;
-	font-size:30px;
-}
-
-
-ul{	
+ul {	
 	list-style-type: none;
 	padding-left:0;
 }
 
+.selectbox{
+	padding: 5px 0px;
+}
+
+#leftpane{
+	position: absolute;
+	top:10px;
+	left:50px;
+	z-index: 1;
+	padding: 0 20px;
+	font-size:30px;
+	border-radius: 12px;
+	background-color: white;
+	box-shadow: 2px 2px 20px #888888;
+}
 
 #mapcontainer{
-	margin-top: 10px;
-	width: 640px; 
-	float:right;
+	width: 100%; 
+	position:absolute;
+	top:0;
+	left:0;
+	height:100%;	
 }
 
 #predictions{
+	color:red;
+}
 
-	color:#993300;
+.prediction{
+	display:inline-block;
+	font-weight: bold;
+	font-size: 1.2em;
+}
 
+.predictionUnits{
+	font-size: 0.5em;
+	position:relative;
+	left:4px; 
 }
 
 #nearbystopstitle{
-
 	font-size: 25px;
 	color:black;
-
 }
 
 #nearbystops{
-
 	font-size: 20px;
-	color:#993300;
-
+	color:forestgreen;
 }
 
 #map{
-
-  height: 480px;
-
+	height: 100%;
 }
 
