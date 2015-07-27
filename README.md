@@ -2,7 +2,7 @@
 
 
 
-Hosted app: [http://cs.ucsb.edu/~esterkin/nextmuni](http://cs.ucsb.edu/~esterkin/nextmuni)
+Hosted app: [http://esterkin.github.io/nextmuni](http://esterkin.github.io/nextmuni)
 
 App repo: [http://github.com/esterkin/nextmuni](http://github.com/esterkin/nextmuni)
 
