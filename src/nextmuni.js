@@ -5,6 +5,18 @@
     
     */        
 
+    /*
+
+    ///Call sequences///
+
+    loadRoutes() —> listRouteTitles() —> jQuery("#routes").change()
+
+    loadDirectionsAndStops() —> listDirections() —> $("#directions”).change()
+
+    listStops() —> $(“#stops”).change()
+    
+    */
+
     var routeSelected; //route currently selected;
     var stopTagSelected; //stopTag associated with stop currently selected;
     var stopSelected //name of stop current selected
@@ -19,6 +31,8 @@
     var routexml; //xml containing directions and stops
     var agency = "sf-muni";
     var nextBusURL = "http://webservices.nextbus.com/service/publicXMLFeed?command=routeList&a=";
+    var predictionsIntervalId = 0;
+  
 
     //arrays used to preserve output order
     var routesarray = []; 
@@ -67,16 +81,14 @@
             var r = routesarray[i];
             $("#routes").append($("<option></option>") //create <option> elements in <select> elem
                 .attr("value", r["tag"])
-                .text(r["title"]));
+                .text(r["title"]))
+                .selectmenu('refresh');
 
         }
 
-        if(getParameterByName("r") != "" && getParameterByName("r") != "null"){
-            $("#routes").val(getParameterByName("r"));
+        if(getParameterByName("r") != ""){
+            $("#routes").val(getParameterByName("r")).selectmenu('refresh').change();
         }
-
-        routeSelected = $('#routes').val() // set which route is currently selected 
-        loadDirectionsAndStops(routeSelected, listDirections); //pass selected route to loadDirectionsAndStops()
     }
 
     function loadDirectionsAndStops(routeSelected, successCallback) {
@@ -88,10 +100,8 @@
             type: 'GET',
             dataType: "xml",
             success: function (data) {
-                routexml = data;
-                //listDirections(data);
+                routexml = data;             
                 successCallback(data);
-
             }
 
         })
@@ -121,15 +131,14 @@
 
             $("#directions").append($("<option></option>") //create <option> elements in <select> elem
                 .attr("value", direction["tag"])
-                .text(direction["title"]));
+                .text(direction["title"]))
+                .selectmenu('refresh');
 
         }
 
-        if(getParameterByName("d") != "" && getParameterByName("d") != "null"){
-            $("#directions").val(getParameterByName("d"));
+        if(getParameterByName("d") != ""){
+            $("#directions").val(getParameterByName("d")).selectmenu('refresh').change();
         }
-
-        listStops(xml);
     }
 
     function listStops(xml) { //sets the 'Stop' dropdown menu
@@ -147,32 +156,27 @@
 
         //display stops given direction 
 
-        var direction_select_index = $("#directions")[0].selectedIndex;
+        var direction_select_index = $("#directions")[0].selectedIndex - 1 ; // -1 offset since we're adding a prepending Direction to 'directions' dropdown
         var direction_stops = $(directionTags[direction_select_index]).children('stop'); //contains only <stop> element with single 'tag' attribute
 
         $(direction_stops).each(function (index) {
 
             $('#stops').append($("<option></option>")
-                .attr("value", $(this).attr('tag'))
-                .text(stopsmap[$(this).attr('tag')]));
+                                .attr("value", $(this).attr('tag'))
+                                .text(stopsmap[$(this).attr('tag')]))
+                       .selectmenu('refresh');
 
         });
 
-        var stops_select_index = $("#stops")[0].selectedIndex;
-
-
         stopTagSelected = $('#stops').val()
 
-        if(getParameterByName("s") != "" && getParameterByName("s") != "null"){
-            $("#stops").val(getParameterByName("s"));
+        if(getParameterByName("s") != ""){
+            $("#stops").val(getParameterByName("s")).selectmenu('refresh').change();
         }
-
-        updateURL();   
-
-        loadPredictions(routeSelected, stopTagSelected);
 
         setLatLon(xml);
     }
+
 
     function loadPredictions() {
 
@@ -183,12 +187,17 @@
             type: 'GET',
             dataType: "xml",
             success: function (data) {
-                listPredictions(data);
+                // if we still have something scheduled
+                if(predictionsIntervalId !=0){
+                    listPredictions(data);
+                }
             }
         });
     }
 
     function listPredictions(xml) {
+
+        $("#predictions").show();
 
         var limit = 2; //limit to 3 predictions
         var predictionsarray = new Array();
@@ -252,13 +261,13 @@
 
     function setLatLon() {
 
-
         var selectedStop = $(routexml).find("[tag='" + stopTagSelected + "']");
         
         listlat = selectedStop.attr('lat');
         listlon = selectedStop.attr('lon');
-
-        dropMarker(listlat, listlon);
+        if(listlat != undefined && listlon != undefined){
+            dropMarker(listlat, listlon);
+        }
 
     }
 
@@ -267,12 +276,12 @@
         map = L.map('map').setView([37.7577, -122.4376], 16);
 
         map.on('dragstart', function(){
-            $("#leftpane").fadeTo(100,0.4);
+                $("#leftpane").fadeTo(100,0.4);
             })
      
             .on('dragend', function(){
-                    $("#leftpane").fadeTo(100,1);
-                });
+                $("#leftpane").fadeTo(100,1);
+            });
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -349,7 +358,7 @@
 
     function updateURL(clear){
         if(clear){
-            window.history.replaceState({},"","?r=" + $("#routes").val() + "&d=null" + "&s=null");
+            window.history.replaceState({}, "", '');
         }
         else{
             window.history.replaceState({},"", "?r=" + $("#routes").val() + "&d=" + $("#directions").val() + "&s=" + $("#stops").val());
@@ -362,3 +371,26 @@
             results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
+
+
+    // reset and disable a jqMobile select
+    function resetAndDisableDropdown(selectors){
+        
+        selectors.forEach(function(selector,index, array){
+            $(selector).val($(selector + " option:first").val())
+                       .selectmenu("disable")
+                       .selectmenu('refresh')
+                       .change(); // trigger since .val() doesn't automatically do it
+        });
+    }
+
+    function resetAndEnableDropdown(selectors){
+
+         selectors.forEach(function(selector,index, array){
+            $(selector).val($(selector + " option:first").val())
+                       .selectmenu('enable')
+                       .selectmenu('refresh')
+                       .change(); // trigger since .val() doesn't automatically do it
+        });     
+    }
+    
