@@ -16,6 +16,7 @@ ul {
 	padding-left:0;
 }
 
+
 .selectbox{
 	padding: 5px 0px;
 }
@@ -24,12 +25,34 @@ ul {
 	position: absolute;
 	top:10px;
 	left:50px;
+	width:250px;
+	height:450px;
 	z-index: 1;
-	padding: 0 20px;
+	padding: 10px 20px;
 	font-size:30px;
 	border-radius: 12px;
 	background-color: white;
 	box-shadow: 2px 2px 20px #888888;
+}
+
+@media(max-width: 800px){
+
+	#leftpane {
+		width:auto;
+		height:500px;
+		position: absolute;
+		left: 10%;
+		right: 10%;
+		z-index: 1;
+		font-size: 30px;
+		border-radius: 12px;
+		background-color: white;
+		box-shadow: 2px 2px 20px #888888;
+	}
+
+	#predictions{
+		font-size: 1.5em;
+	}
 }
 
 #mapcontainer{
@@ -41,10 +64,13 @@ ul {
 }
 
 #predictions{
+	margin: 0 auto;
+	text-align: center;
 	color:red;
 }
 
 .prediction{
+
 	display:inline-block;
 	font-weight: bold;
 	font-size: 1.2em;
@@ -59,9 +85,17 @@ ul {
 #nearbystopstitle{
 	font-size: 25px;
 	color:black;
+	margin: 10px 0px;
 }
 
 #nearbystops{
+	position: absolute;
+	bottom:5px;
+	text-align: center;
+	left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
 	font-size: 20px;
 	color:forestgreen;
 }
