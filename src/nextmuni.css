@@ -9,9 +9,8 @@ html, body, #map{
 }
 
 #map{
-	position:absolute; top:0; bottom:0; width:100%;
+	position:fixed; top:0; bottom:0; width:100%;
 }
-
 
 select{
     border:1px solid #ccc;
@@ -24,7 +23,6 @@ ul {
 	list-style-type: none;
 	padding-left:0;
 }
-
 
 .selectbox{
 	padding: 5px 0px;
