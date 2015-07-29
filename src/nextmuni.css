@@ -1,6 +1,15 @@
-html, body{
+body{
+	padding: 0;
+    margin: 0;
+}
+
+html, body, #map{
     font-family: Arial, Helvetica, sans-serif;
     height: 100%;
+}
+
+#map{
+	position:absolute; top:0; bottom:0; width:100%;
 }
 
 
@@ -35,7 +44,11 @@ ul {
 	box-shadow: 2px 2px 20px #888888;
 }
 
-@media(max-width: 800px){
+@media screen 
+  and (device-width: 360px) 
+  and (device-height: 640px) 
+  and (-webkit-device-pixel-ratio: 3) 
+  and (orientation: portrait){
 
 	#leftpane {
 		width:auto;
@@ -53,14 +66,6 @@ ul {
 	#predictions{
 		font-size: 1.5em;
 	}
-}
-
-#mapcontainer{
-	width: 100%; 
-	position:absolute;
-	top:0;
-	left:0;
-	height:100%;	
 }
 
 #predictions{
@@ -99,8 +104,3 @@ ul {
 	font-size: 20px;
 	color:forestgreen;
 }
-
-#map{
-	height: 100%;
-}
-
