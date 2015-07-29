@@ -5,42 +5,79 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="nextmuni.css">
     <link rel="stylesheet" href="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+    <link rel="stylesheet" href="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.css"
     <title>SF MUNI Predictions</title>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+    <script src="//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <script src="nextmuni.js"></script>
     <script>
         $(document).ready(function () {
 
-            $("#stops").change(function(e){
-               updateURL(); 
-            });
-
-            $("#routes, #directions").change(function(e){
-                updateURL(true);
-            });
-                
             loadRoutes(nextBusURL,agency);
 
+            if(getParameterByName("r") === "" || getParameterByName("r") === "null"){
+                $("#predictions").hide();
+
+                // only have Route enabled on first load
+                resetAndDisableDropdown(["#directions", "#stops"]);
+            }else{ // assume that all params (query strings) are present
+                loadPredictions();
+            }
+
             $("#routes").change(function () {
-                routeSelected = $('#routes').val();
-                $("#stops").empty();
-                $("#directions").empty();
-                loadDirectionsAndStops(routeSelected,listDirections);
+                
+                if($("#routes").val() === "Route"){
+                    resetAndDisableDropdown(["#directions"]);
+                }else{
+                    resetAndEnableDropdown(['#directions']);
+                                  
+                    routeSelected = $('#routes').val();
+                    // remove all <option> elems besides the default 
+                    $("#stops").children(':not(:first-child)').remove();
+                    $("#stops").selectmenu('refresh');
+                    $("#directions").children(':not(:first-child)').remove();
+                    $("#directions").selectmenu('refresh');
+
+                    loadDirectionsAndStops(routeSelected,listDirections);
+                }
             });
 
-            $("#directions").change(function () {
-                $("#stops").empty();
-                listStops(xmldata);
+            $("#directions").change(function (e) {
+                // if the dropdown displays 'Directions'
+                // then disable the 'Stop' dropdown as a 
+                // direction has yet to be chosen 
+                if($("#directions").val() === "Direction"){
+                    resetAndDisableDropdown(["#stops"]);
+                }else{
+                    resetAndEnableDropdown(['#stops']);
+                    // remove the old stops
+                    $("#stops").children(':not(:first-child)').remove();
+                    // load the new stops
+                    listStops(xmldata);
+                }
             });
 
             $("#stops").change(function () {
-                stopTagSelected = $('#stops').val();
-                loadPredictions();
-                setLatLon();
-            });
 
-            setInterval(loadPredictions, 10000); //update predictions every 10 seconds
+                // there should only be one xhr scheduled
+                // at a time
+                clearInterval(predictionsIntervalId);
+                predictionsIntervalId = 0;
+
+                if($(this).val() !== "Stop"){
+                    stopTagSelected = $('#stops').val();
+                    loadPredictions();
+                    predictionsIntervalId = setInterval(loadPredictions,10000);
+                    setLatLon();
+                    updateURL();
+                }
+                else{              
+                    $("#predictions").empty();
+                    // clear the query string
+                    updateURL(true);
+                }
+            });
 
             initializeMap();
             getLocation();
@@ -53,31 +90,22 @@
     <div id="content">
 
         <div id='leftpane'>
-            <ul id='userinput'>
-                <li>
-                    <div class="selectbox">
-                    Route
-                    <select id='routes'></select>
-                    </div>
-                </li>
-                <li>
-                    <div class="selectbox">
-                        Direction
-                        <select id='directions'></select>
-                     </div>
-                </li>
-                <li>
-                    <div class="selectbox">
-                        Stop
-                        <select id='stops'></select>
-                     </div>
-                </li>
-            </ul>
+            <fieldset data-role="controlgroup" data-type="vertical">                         
+                <select name="select-native-1" id='routes'>
+                    <option>Route</option>  
+                </select>        
+                <select name="select-native-1" id='directions'>
+                    <option>Direction</option>
+                </select>
+                <select name="select-native-1" id='stops'>
+                    <option>Stop</option>    
+                </select>      
+            </fieldset>
             <ul id='predictions'>
             </ul>
             </ul>
             <ul id='nearbystops'>
-                <p id='nearbystopstitle'></p>
+                <div id='nearbystopstitle'></div>
             </ul>
         </div>
 
